@@ -1,0 +1,36 @@
+{% extends "holidays/base.html" %}
+{% load staticfiles %}
+{% block styles %}
+<link rel="stylesheet" href="/static/css/list.css">
+<link href="https://fonts.googleapis.com/css?family=Solway&display=swap" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<h1 style="text-align: center">List Of Places</h1>
+<form id="form1" action="{% url 'holidays:list' %}" method="GET">
+    <input name="q" type="text" placeholder="search">
+    <input type="submit" value="search">
+</form>
+{% for place1 in object_list %}
+  <div class="card">
+    <h1><a href='{{ place1.get_absolute_url }}' style="text-decoration: None;">{{ place1.package }}</a></h1>
+    {% for i in place1.images.all %} 
+        <img class="mySlides" src='{{ i.image.url }}' width=500 height=400 alt="No image">
+    {% endfor %}
+    <p>Place/s Included:
+    <span style="white-space: nowrap;">{% if place1.name1 %}
+        <h3>{{ place1.name1 }}({{ place1.country_name1 }})</h3>
+    {% endif %}
+    {% if place1.name2 %}
+        <h3>{{ place1.name2 }}({{ place1.country_name2 }})</h3>
+    {% endif %}
+    {% if place1.name3 %}
+        <h3>{{ place1.name3 }}({{ place1.country_name3 }})</h3>
+    {% endif %}
+    </span>
+    </p>
+    <a href="{{ place1.get_add_to_cart_url }}" style="padding:10px; text-decoration: None;">Add To Cart</a>
+    <a href="{{ place1.get_remove_from_cart_url }}" style="padding:10px; text-decoration: None;">Remove From Cart</a><br><br>
+    </div>
+    {% endfor %}
+   Hrithika Dodia
+{% endblock %}

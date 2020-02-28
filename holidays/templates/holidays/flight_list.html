@@ -1,0 +1,33 @@
+{% extends "holidays/base.html" %}
+{% load staticfiles %}
+{% block styles %}
+<link rel="stylesheet" href="/static/css/list.css">
+<link href="https://fonts.googleapis.com/css?family=Solway&display=swap" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<h1 style="text-align: center;">List Of Flights</h1>
+<form action="{% url 'holidays:flight' %}" method="GET">
+    <input name="q1" type="text" placeholder="search">
+    <input name="q2" type="text" placeholder="search">
+    <input type="submit" value="search">
+</form>
+{% for flight in object_list %}
+  <div class="card">
+    <h1>{{ flight.name|upper }}</h1>
+    <div class="general">Source: </div>{{ flight.source|upper }}<br>
+    <div class="general">Destination: </div>{{ flight.destination|upper }}<br>
+    <div class="general">Date: </div>{{ flight.date }}<br>
+    <div class="general">Depature Time: </div>{{ flight.dept_time }}<br>
+    <div class="general">Arrival Time: </div>{{ flight.arrival }}<br>
+    <div class="general">Price:</div>
+    {% if flight.discount_price %}        
+        <h3>Rs {{ flight.discount_price }}</h3>
+        <strike><h3>Rs {{ flight.price }}</h3></strike><br/>
+    {% else %}
+        <h3>Rs {{ flight.price }}</h3><br/>
+    {% endif %}
+    <a href="{% url 'holidays:flight_booking_create' flight.id %}"><button type="button">Book Tickets</button></a><br><br>
+    </div>
+    {% endfor %}
+   Hrithika Dodia
+{% endblock %}

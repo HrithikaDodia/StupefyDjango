@@ -1,0 +1,11 @@
+{% extends "holidays/base.html" %}
+{% block content %}
+<form  method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ request.user }}
+    <button type="submit" class="btn btn-outline-warning">
+        <i class="icon-user icon-white"></i> Pay
+    </button>
+</form>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "holidays/base.html" %}
+{% block styles %}
+<link rel="stylesheet" href="/static/css/detail.css">
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Solway&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Merienda&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+<h1 style="font-family: 'Merienda', cursive;">{{ detail.package }}</h1>
+    <div  style="display:flex; justify-content: center; align-items: center;">
+    {% for i in detail.images.all %} 
+            <img class="mySlides" src='{{ i.image.url }}' width=500 height=300 alt="No image">
+    {% endfor %}
+    </div>
+    <p class="general">Place/s Included:</p>
+    {% if detail.name1 %}
+        <h3>{{ detail.name1 }}({{ detail.country_name1 }})</h3>
+    {% endif %}
+    {% if detail.name2 %}
+        <h3>{{ detail.name2 }}({{ detail.country_name2 }})</h3>
+    {% endif %}
+    {% if detail.name3 %}
+        <h3>{{ detail.name3 }}({{ detail.country_name3 }})</h3>
+    {% endif %}
+    <p class="general">Description:</p>
+    <h3 style="font-family: 'Dancing Script', cursive;">
+        {{ detail.description }}
+    </h3>
+    <p class="general">Price:
+    {% if detail.discount_price %}        
+        <h3>Rs {{ detail.discount_price }}</h3>
+        <strike><h3>Rs {{ detail.price }}</h3></strike><br/>
+    {% else %}
+        <h3>Rs {{ detail.price }}</h3><br/>
+    {% endif %}
+    </p>
+
+    <a href="{{ detail.get_add_to_cart_url }}" style="padding:10px; text-decoration: None;">Add To Cart</a>
+    <a href="{{ detail.get_remove_from_cart_url }}" style="padding:10px; text-decoration: None;">Remove From Cart</a><br><br>
+</div>
+    <script>
+        var myIndex = 0;
+        carousel();
+        
+        function carousel() {
+          var i;
+          var x = document.getElementsByClassName("mySlides");
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+          }
+          myIndex++;
+          if (myIndex > x.length) {myIndex = 1}    
+          x[myIndex-1].style.display = "block";  
+          setTimeout(carousel, 2000);
+        }
+    </script>
+
+{% endblock %}

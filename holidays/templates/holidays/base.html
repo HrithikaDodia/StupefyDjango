@@ -1,0 +1,24 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/css/home.css">
+    {% block styles %}
+    {% endblock %}
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li class="main">Stupefy</li>
+        <li><a href="{% url 'holidays:list' %}">Home</a></li>
+        <li><a href="{% url 'holidays:order-summary' %}">Booking Bag</a></li>
+        <li><a href="{% url 'holidays:booking_complete' %}">Bookings</a></li>
+        <li><a href="{% url 'holidays:flight' %}">Flights</a></li>
+        <li><a href="#">Hrithika</a></li>
+      </ul>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends "holidays/base.html" %}
+{% block content %}
+{% block styles %}
+<link rel="stylesheet" href="/static/css/list.css">
+<link href="https://fonts.googleapis.com/css?family=Solway&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock %}
+<table class="table table-hover" style="background-color: oldlace;">
+    <thead>
+      <tr>
+        <th scope="col">Package</th>
+        <th scope="col">Price Per Person</th>
+        <th scope="col">Number Of Person/s</th>
+        <th scope="col">Total Price</th>
+        <th scope="col">Summary</th>
+      </tr>
+    </thead>
+
+   {{ request.user }}
+    <tbody>
+    {% for place in order %}
+      {% if place.booked %}
+      <tr>
+        <td>{{ place.package }}</td>
+        <td>{% if place.package.discount_price %}        
+            Rs {{ place.package.discount_price }}
+        {% else %}
+            Rs {{ place.package.price }}<br/>
+        {% endif %}
+        </td>
+        <td>{{ place.number }}</td>
+        <td>{% if place.package.discount_price %}        
+            Rs {{ place.get_total_place_discount_price }}
+        {% else %}
+            Rs {{ place.get_total_place_price }}<br/>
+        {% endif %}</td>
+        <td><a href="{% url 'holidays:pdf' place.id %}"><button type="button" class="btn btn-light">Summary</button></a><br><br></td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  
+  <table class="table table-hover" style="background-color: oldlace;">
+    <thead>
+      <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Source</th>
+        <th scope="col">Destination</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for book in flightbooking %}
+        {% for i in book.flight_booking.all %}
+        {% if i.booked %}
+        <tr>
+        <td>{{ i.firstname }}</td>
+        <td>{{ i.lastname }}</td>
+        <td>{{ book.flight.source }}</td>
+        <td>{{ book.flight.destination }}</td>
+        <td><a href="{% url 'holidays:flight_person_detail' i.id %}"><button type="button" class="btn btn-light">Summary</button></a><br><br></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+  </table>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  
+{% endblock %}
