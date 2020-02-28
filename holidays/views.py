@@ -135,7 +135,7 @@ def order(request):
     else:
         order_id = flightperson[0].id
     param_dict = {
-        "MID": "eEIZxa21528202105928",
+        "MID": "",
         "ORDER_ID": str(order_id),
         "CUST_ID": str(request.user.id),
         "TXN_AMOUNT": str(ttl_amt),
