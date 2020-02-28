@@ -17,7 +17,7 @@ from django.urls import reverse_lazy
 from django.db import transaction
 
 
-MERCHANT_KEY = 'K9arqMGG8!%CiOr5'
+MERCHANT_KEY = ''
 
 class GeneratePdf(View):
     def get_context_data(self, **kwargs):
